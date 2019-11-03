@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node_modules/.bin/tape test/**/*.js | node_modules/.bin/tap-spec",
-    "coverage": "node_modules/.bin/nyc npm run test"
+    "coverage": "node_modules/.bin/nyc report --reporter=text-lcov | node_modules/.bin/coveralls"
   },
   "author": "James Dewar",
   "license": "ISC",

@@ -1,0 +1,17 @@
+{
+  "name": "textspace",
+  "version": "1.0.0",
+  "description": "a simple virtual world",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/.bin/tape test/**/*.js | node_modules/.bin/tap-spec",
+    "coverage": "node_modules/.bin/nyc npm run test"
+  },
+  "author": "James Dewar",
+  "license": "ISC",
+  "devDependencies": {
+    "nyc": "^14.1.1",
+    "tap-spec": "^5.0.0",
+    "tape": "^4.11.0"
+  }
+}

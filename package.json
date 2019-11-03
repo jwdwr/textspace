@@ -10,6 +10,7 @@
   "author": "James Dewar",
   "license": "ISC",
   "devDependencies": {
+    "coveralls": "^3.0.7",
     "nyc": "^14.1.1",
     "tap-spec": "^5.0.0",
     "tape": "^4.11.0"

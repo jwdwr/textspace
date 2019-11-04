@@ -1,6 +1,9 @@
 const test = require('tape');
 const { Space } = require('../lib/space');
 
+/**
+ * @test {Space}
+ */
 test('Spaces', t => {
     t.plan(3);
 

@@ -1,6 +1,9 @@
 const test = require('tape');
 const { Block } = require('../lib/block');
 
+/**
+ * @test {Block}
+ */
 test('Blocks', t => {
     t.plan(4);
 

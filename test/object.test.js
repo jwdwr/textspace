@@ -13,10 +13,10 @@ test('Objects', t => {
     t.ok(object, 'Object exists');
     t.equal(object.name, objectName, 'Block has correct name');
 
-    object.addBlock(0, 0, 0, 'stone');
-    object.addBlock(0, 1, 0, 'stone');
-    object.addBlock(0, 1, 1, 'stone');
-    object.addBlock(-1, 1, 0, 'stone');
+    object.addBlock({x: 0, y: 0, z: 0}, 'stone');
+    object.addBlock({x: 0, y: 1, z: 0}, 'stone');
+    object.addBlock({x: 0, y: 1, z: 1}, 'stone');
+    object.addBlock({x: -1, y: 1, z: 0}, 'stone');
 
     t.equal(object.dimensions.x, 2, 'Block has correct X size');
     t.equal(object.dimensions.y, 2, 'Block has correct Y size');

@@ -1,13 +1,15 @@
 /**
  * A block, which can be placed in a grid
  */
-class Block {
+export default class Block {
+    private type: string;
+
     /**
      * Create a new block from the configuration object
      * @param {Object} config initial block config
      */
-    constructor(config) {
-        this._type = config.type;
+    constructor(config: {type: string}) {
+        this.type = config.type;
     }
 
     /**
@@ -16,9 +18,7 @@ class Block {
      */
     get info() {
         return {
-            type: this._type
+            type: this.type
         }
     }
-}
-
-exports.Block = Block;
+};

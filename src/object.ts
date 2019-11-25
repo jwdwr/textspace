@@ -1,10 +1,14 @@
-const { Block } = require('./block');
+import Block from './block';
+import { Dimension, Coords } from './interfaces/coords';
 
 /**
  * An object, which is made out of blocks arranged in a certain shape.
  */
-class Object {
-  constructor(name, blocks) {
+export default class Object {
+  private name: string;
+  blocks: {coords: Coords, block: Block}[];
+
+  constructor(name: string, blocks: {coords: Coords, block: Block}[]) {
     this.name = name;
     this.blocks = blocks || [];
   }
@@ -14,28 +18,29 @@ class Object {
    * @param {{x: number, y: number, z: number}} coords - coordinates
    * @param {string} blockType type of block to add
    */
-  addBlock(coords, blockType) {
+  addBlock(coords: Coords, blockType: string) {
     this.blocks.push({coords, block: new Block({type: blockType})});
   }
 
   /**
    * dimensions of this object's bounding box
    */
-  get dimensions() {
-    const bounds = this.blocks.reduce((acc, block) => {
-      ['x', 'y', 'z'].forEach(dimension => {
+  get dimensions(): Coords {
+    const bounds = this.blocks.reduce((acc: {min: Coords, max: Coords}, block: {coords: Coords, block: Block}) => {
+      for (let dimension in Dimension) {
         if (acc.min[dimension] === undefined || acc.min[dimension] > block.coords[dimension])
           acc.min[dimension] = block.coords[dimension];
         if (acc.max[dimension] === undefined || acc.max[dimension] < block.coords[dimension])
           acc.max[dimension] = block.coords[dimension];
-        });
+        }
       return acc;
     }, {min: {}, max: {}});
 
-    const dimensions = {};
-    ['x', 'y', 'z'].forEach(dimension => {
+    const dimensions: Coords = {};
+
+    for (let dimension in Dimension) {
       dimensions[dimension] = bounds.max[dimension] - bounds.min[dimension] + 1;
-    })
+    }
 
     return dimensions;
   }
@@ -44,15 +49,13 @@ class Object {
    * array representation of this object
    */
   get array() {
-    const _array = [];
+    const array: Block[][][] = [];
     this.blocks.forEach(block => {
-      _array[block.coords.x] = _array[block.coords.x] || [];
-      _array[block.coords.x][block.coords.y] = _array[block.coords.x][block.coords.y] || [];
-      _array[block.coords.x][block.coords.y][block.coords.z] = block.block;
+      array[block.coords.x] = array[block.coords.x] || [];
+      array[block.coords.x][block.coords.y] = array[block.coords.x][block.coords.y] || [];
+      array[block.coords.x][block.coords.y][block.coords.z] = block.block;
     });
 
-    return _array;
+    return array;
   }
 }
-
-exports.Object = Object;

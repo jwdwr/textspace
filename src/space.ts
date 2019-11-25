@@ -1,14 +1,13 @@
 /**
  * A space, within which...
  */
-class Space {
+export default class Space {
+  private name: string;
   /**
    * Create a space with the given name
-   * @param {string} name 
+   * @param {string} name
    */
-  constructor(name) {
+  constructor(name: string) {
     this.name = name;
   }
 }
-
-exports.Space = Space;

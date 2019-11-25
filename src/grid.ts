@@ -1,19 +1,28 @@
-const { Object } = require('./object');
+import Block from "./block";
+import { Coords } from "./interfaces/coords";
+
+import Object from './object';
 
 /**
  * A grid of cubes, which contain blocks.
  */
-class Grid {
+export default class Grid {
+  private sizeX: number;
+  private sizeY: number;
+  private sizeZ: number
+
+  private array: Block[][][];
+
   /**
    * Create a grid with the given dimensions
    * @param {number} sizeX
    * @param {number} sizeY
    * @param {number} sizeZ
    */
-  constructor(sizeX, sizeY, sizeZ) {
-    this._sizeX = sizeX;
-    this._sizeY = sizeY;
-    this._sizeZ = sizeZ;
+  constructor(sizeX: number, sizeY: number, sizeZ: number) {
+    this.sizeX = sizeX;
+    this.sizeY = sizeY;
+    this.sizeZ = sizeZ;
     this.array = new Array(sizeX).fill(new Array(sizeY).fill(new Array(sizeZ)));
   }
 
@@ -22,9 +31,9 @@ class Grid {
    * @param {{x: number, y: number, z: number}} coords - coordinates
    * @throws {Error}
    */
-  checkCube(coords, checkOccupancy) {
+  checkCube(coords: Coords, checkOccupancy: boolean = false) {
     if (coords.x < 0 || coords.y < 0 || coords.z < 0
-      || coords.x >= this._sizeX || coords.y >= this._sizeY || coords.z >= this._sizeZ) {
+      || coords.x >= this.sizeX || coords.y >= this.sizeY || coords.z >= this.sizeZ) {
       throw new Error(`Coordinates (${coords.x}, ${coords.y}, ${coords.z}) out of grid range`);
     } else if (checkOccupancy && this.getCube({x: coords.x, y: coords.y, z: coords.z})) {
       throw new Error(`Coordinates (${coords.x}, ${coords.y}, ${coords.z} are already occupied)`);
@@ -36,7 +45,7 @@ class Grid {
    * @param {{x: number, y: number, z: number}} coords - coordinates
    * @return {Block} the block contained by this cube
    */
-  getCube(coords) {
+  getCube(coords: Coords) {
     this.checkCube(coords);
     return this.array[coords.x][coords.y][coords.z];
   }
@@ -46,7 +55,7 @@ class Grid {
    * @param {{x: number, y: number, z: number}} coords - coordinates
    * @param {Block} block - The block to place
    */
-  setCube(coords, block) {
+  setCube(coords: Coords, block: Block) {
     this.checkCube({x: coords.x, y: coords.y, z: coords.z});
     this.array[coords.x][coords.y][coords.z] = block;
   }
@@ -56,7 +65,7 @@ class Grid {
    * @type {{x: number, y: number, z: number}}
    */
   get size() {
-    return {x: this._sizeX, y: this._sizeY, z: this._sizeZ};
+    return {x: this.sizeX, y: this.sizeY, z: this.sizeZ};
   }
 
   /**
@@ -66,7 +75,7 @@ class Grid {
    * @param {Block} block
    * @param {boolean} overwrite if you want to overwrite whatever exists
    */
-  fillArea(startCoords, endCoords, block, overwrite) {
+  fillArea(startCoords: Coords, endCoords: Coords, block: Block, overwrite: boolean = false) {
     for (let x = startCoords.x; x <= endCoords.x; x++) {
       for (let y = startCoords.y; y <= endCoords.y; y++) {
         for (let z = startCoords.z; z <= endCoords.z; z++) {
@@ -90,7 +99,7 @@ class Grid {
    * @param {Object} object Object to add
    * @param {boolean} overwrite if you want to overwrite whatever exists
    */
-  addObject(coords, object, overwrite) {
+  addObject(coords: Coords, object: Object, overwrite: boolean = false) {
     object.blocks.forEach(block => {
       this.checkCube({x: coords.x + block.coords.x, y: coords.y + block.coords.y, z: coords.z + block.coords.z}, !overwrite);
     });
@@ -100,5 +109,3 @@ class Grid {
     });
   }
 }
-
-exports.Grid = Grid;

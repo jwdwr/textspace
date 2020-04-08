@@ -2,7 +2,7 @@
  * A space, within which...
  */
 export default class Space {
-  private name: string;
+  name: string;
   /**
    * Create a space with the given name
    * @param {string} name

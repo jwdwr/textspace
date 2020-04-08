@@ -1,7 +1,7 @@
 import Block from "./block";
 import { Coords } from "./interfaces/coords";
 
-import Object from './object';
+import Structure from './structure';
 
 /**
  * A grid of cubes, which contain blocks.
@@ -94,17 +94,17 @@ export default class Grid {
   }
 
   /**
-   * Add object to grid
+   * Add structure to grid
    * @param {{x: number, y: number, z: number}} coords - coordinates
-   * @param {Object} object Object to add
+   * @param {structure} structure structure to add
    * @param {boolean} overwrite if you want to overwrite whatever exists
    */
-  addObject(coords: Coords, object: Object, overwrite: boolean = false) {
-    object.blocks.forEach(block => {
+  addStructure(coords: Coords, structure: Structure, overwrite: boolean = false) {
+    structure.blocks.forEach(block => {
       this.checkCube({x: coords.x + block.coords.x, y: coords.y + block.coords.y, z: coords.z + block.coords.z}, !overwrite);
     });
 
-    object.blocks.forEach(block => {
+    structure.blocks.forEach(block => {
       this.setCube({x: coords.x + block.coords.x, y: coords.y + block.coords.y, z: coords.z + block.coords.z}, block.block);
     });
   }

@@ -2,19 +2,19 @@ import Block from './block';
 import { Dimension, Coords } from './interfaces/coords';
 
 /**
- * An object, which is made out of blocks arranged in a certain shape.
+ * A structure, which is made out of blocks arranged in a certain shape.
  */
-export default class Object {
-  private name: string;
+export default class Structure {
+  name: string;
   blocks: {coords: Coords, block: Block}[];
 
-  constructor(name: string, blocks: {coords: Coords, block: Block}[]) {
+  constructor(name: string, blocks?: {coords: Coords, block: Block}[]) {
     this.name = name;
     this.blocks = blocks || [];
   }
 
   /**
-   * add a block to the object
+   * add a block to the structure
    * @param {{x: number, y: number, z: number}} coords - coordinates
    * @param {string} blockType type of block to add
    */
@@ -23,7 +23,7 @@ export default class Object {
   }
 
   /**
-   * dimensions of this object's bounding box
+   * dimensions of this structure's bounding box
    */
   get dimensions(): Coords {
     const bounds = this.blocks.reduce((acc: {min: Coords, max: Coords}, block: {coords: Coords, block: Block}) => {
@@ -46,7 +46,7 @@ export default class Object {
   }
 
   /**
-   * array representation of this object
+   * array representation of this structure
    */
   get array() {
     const array: Block[][][] = [];
